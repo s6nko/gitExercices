@@ -8,7 +8,6 @@
 #   "S002": {"name": "Bob",   "id": "S002"},
 # }
 
-
 def add_student(students: dict, name: str, student_id: str) -> dict:
     """
     Add a new student to the students dictionary.
@@ -32,9 +31,13 @@ def add_student(students: dict, name: str, student_id: str) -> dict:
         >>> db
         {"S001": {"name": "Alice", "id": "S001"}}
     """
-    # TODO: implement this function
-    raise NotImplementedError("add_student is not implemented yet.")
+    if student_id in students.keys():
+        print(f"Student {student_id} already exists.")
+        return dict
 
+    new_student = {"name": name.strip().title(), "id": student_id}
+    students[student_id] = new_student
+    return dict
 
 def remove_student(students: dict, student_id: str) -> dict:
     """
@@ -56,9 +59,12 @@ def remove_student(students: dict, student_id: str) -> dict:
         >>> db
         {}
     """
-    # TODO: implement this function
-    raise NotImplementedError("remove_student is not implemented yet.")
+    if student_id not in students.keys():
+        print(f"Student {student_id} not found.")
+        return dict
 
+    students.pop(student_id)
+    return students
 
 def find_student(students: dict, name: str) -> list:
     """
@@ -85,5 +91,11 @@ def find_student(students: dict, name: str) -> list:
         >>> find_student(db, "xyz")
         []
     """
-    # TODO: implement this function
-    raise NotImplementedError("find_student is not implemented yet.")
+
+    matchingStudents = []
+    
+    for k,v in students.items():
+        if name.strip().title() == v["name"]:
+            matchingStudents.append(v)
+    
+    return matchingStudents
