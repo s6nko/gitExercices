@@ -33,10 +33,11 @@ def add_student(students: dict, name: str, student_id: str) -> dict:
     """
     if student_id in students.keys():
         print(f"Student {student_id} already exists.")
+        return dict
 
     new_student = {"name": name.strip().title(), "id": student_id}
     students[student_id] = new_student
-
+    return dict
 
 def remove_student(students: dict, student_id: str) -> dict:
     """
@@ -60,9 +61,10 @@ def remove_student(students: dict, student_id: str) -> dict:
     """
     if student_id not in students.keys():
         print(f"Student {student_id} not found.")
+        return dict
 
     students.pop(student_id)
-
+    return students
 
 def find_student(students: dict, name: str) -> list:
     """
