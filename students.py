@@ -89,5 +89,14 @@ def find_student(students: dict, name: str) -> list:
         >>> find_student(db, "xyz")
         []
     """
+
+    matchingStudents = []
+    
+    for k,v in students.items():
+        if name.strip().title() == v["name"]:
+            matchingStudents.append(v)
+    
+    return matchingStudents
+
     # TODO: implement this function
     raise NotImplementedError("find_student is not implemented yet.")
