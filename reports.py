@@ -73,7 +73,19 @@ def summarize_class(students: dict, grades: dict) -> tuple:
         (2, 70.0, 80.0, 60.0)
     """
     # TODO: implement this function
-    raise NotImplementedError("summarize_class is not implemented yet.")
+
+    # Initialisation
+    total_students = len(students)
+    averages = []
+    class_average = 0.0
+    highest_average = 0.0
+    lowest_average = 0.0
+    for student in students:
+        average = get_average(grades, student)
+
+
+    return total_students, class_average, highest_average, lowest_average
+
 
 
 def export_report(students: dict, grades: dict) -> str:
