@@ -78,7 +78,7 @@ def get_average(grades: dict, student_id: str) -> float:
     for grade in student_grades.values():
         sum_grade += grade
 
-    return format(sum_grade / len(student_grades), '.2f')
+    return float(format(sum_grade / len(student_grades), '.2f'))
 
 
 def get_subjects(grades: dict) -> set:
