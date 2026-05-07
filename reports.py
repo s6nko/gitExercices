@@ -21,18 +21,25 @@ def get_top_students(students: dict, grades: dict, n: int = 3) -> list:
 
     Returns:
         list[tuple]: list of (student_id, name, average) sorted descending
-
-    Example:
-        >>> students = {
-        ...   "S001": {"name": "Alice", "id": "S001"},
-        ...   "S002": {"name": "Bob",   "id": "S002"},
-        ... }
-        >>> grades = {"S001": {"Math": 90}, "S002": {"Math": 70}}
-        >>> get_top_students(students, grades, n=1)
-        [("S001", "Alice", 90.0)]
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_top_students is not implemented yet.")
+
+    # Creation of tuples (unsorted)
+    unsorted_list = []
+    for k, v in students.items():
+        student_id = k
+        name = v.get("name")
+        average = get_average(grades, student_id)
+        unsorted_list.append((student_id, name, average))
+
+    # Sort the unsorted list via "average" (3rd element of the tuple)
+    sorted_list = sorted(unsorted_list, key = lambda student: student[2], reverse=True)
+
+    # Return the "n" best students of the class
+    if n >= (len(students)):
+        return sorted_list
+    else:
+        return sorted_list[0:n]
+
 
 
 def summarize_class(students: dict, grades: dict) -> tuple:
