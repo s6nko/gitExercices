@@ -11,7 +11,7 @@ from readline import set_completer
 # }
 
 
-def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict | False:
+def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict:
     """
     Add or update a grade for a student in a given subject.
 
@@ -38,7 +38,7 @@ def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict |
     """
     if score < 0 or score > 100:
         print(f"Invalid score: {score}. Score must be between 0 and 100.")
-        return False
+        return grades
 
     if student_id not in grades:
         grades.setdefault(student_id, {subject: score})
@@ -58,7 +58,7 @@ def get_average(grades: dict, student_id: str) -> float:
 
     Args:
         grades (dict): the current grades database
-        student_id (str): the student's IDz
+        student_id (str): the student's ID
 
     Returns:
         float: the average score, rounded to 2 decimal places
@@ -107,8 +107,7 @@ def get_subjects(grades: dict) -> set:
 
     subjects = set()
     for grades in grades.values():
-        for subject in grades.keys():
-            subjects.add(subject)
+        subjects.add(grades.keys())
     return subjects
 
 def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> list:
