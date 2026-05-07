@@ -95,7 +95,7 @@ def find_student(students: dict, name: str) -> list:
     matchingStudents = []
     
     for k,v in students.items():
-        if name.strip().title() == v["name"]:
+        if name.strip().title() in v["name"]:
             matchingStudents.append(v)
     
     return matchingStudents
