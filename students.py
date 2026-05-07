@@ -97,6 +97,3 @@ def find_student(students: dict, name: str) -> list:
             matchingStudents.append(v)
     
     return matchingStudents
-
-    # TODO: implement this function
-    raise NotImplementedError("find_student is not implemented yet.")
