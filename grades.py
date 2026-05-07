@@ -1,6 +1,8 @@
 # grades.py
 # Developer B — Grade calculations
 # Branch: feature/grades
+from readline import set_completer
+
 
 # The grades database is a nested dictionary with this structure:
 # {
@@ -9,7 +11,7 @@
 # }
 
 
-def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict:
+def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict | False:
     """
     Add or update a grade for a student in a given subject.
 
@@ -34,9 +36,18 @@ def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict:
         >>> db
         {"S001": {"Math": 85}}
     """
-    # TODO: implement this function
-    raise NotImplementedError("add_grade is not implemented yet.")
+    if score < 0 or score > 100:
+        print(f"Invalid score: {score}. Score must be between 0 and 100.")
+        return False
 
+    if student_id not in grades:
+        grades.setdefault(student_id, {subject: score})
+        return grades
+    else :
+        student_grades = grades.get(student_id)
+        student_grades[subject] = score
+        print(grades)
+        return grades
 
 def get_average(grades: dict, student_id: str) -> float:
     """
@@ -47,7 +58,7 @@ def get_average(grades: dict, student_id: str) -> float:
 
     Args:
         grades (dict): the current grades database
-        student_id (str): the student's ID
+        student_id (str): the student's IDz
 
     Returns:
         float: the average score, rounded to 2 decimal places
