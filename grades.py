@@ -1,8 +1,6 @@
 # grades.py
 # Developer B — Grade calculations
 # Branch: feature/grades
-from readline import set_completer
-
 
 # The grades database is a nested dictionary with this structure:
 # {
