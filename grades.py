@@ -111,7 +111,6 @@ def get_subjects(grades: dict) -> set:
             subjects.add(subject)
     return subjects
 
-
 def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> list:
     """
     Return a list of (student_id, name, average) tuples for students
@@ -136,5 +135,14 @@ def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> l
         >>> get_failing_students(students, grades)
         [("S001", "Alice", 40.0)]
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_failing_students is not implemented yet.")
+    unsorted_failing_students = []
+    for student_id, student_grades in grades.items():
+        if student_grades == {}:
+            unsorted_failing_students.append((student_id, students.get(student_id).get("name"), 0.0))
+        else:
+            student_average_grade = get_average(grades, student_id)
+            if student_average_grade >= threshold:
+                continue
+            unsorted_failing_students.append((student_id, students.get(student_id).get("name"), student_average_grade))
+
+    return sorted(unsorted_failing_students, key=lambda x: x[2])
