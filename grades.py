@@ -107,7 +107,8 @@ def get_subjects(grades: dict) -> set:
 
     subjects = set()
     for grades in grades.values():
-        subjects.add(grades.keys())
+        for subject in grades.keys():
+            subjects.add(subject)
     return subjects
 
 def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> list:
