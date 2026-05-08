@@ -2,7 +2,7 @@
 # Developer C — Reporting & summaries
 # Branch: feature/reports
 
-from grades import get_average
+from grades import get_average, get_subjects
 
 
 def get_top_students(students: dict, grades: dict, n: int = 3) -> list:
@@ -103,11 +103,11 @@ def export_report(students: dict, grades: dict) -> str:
     ─────────────────────────────────
 
     Rules:
-    - Student names are left-aligned in a field of 16 characters.
-    - Averages are right-aligned with 2 decimal places.
-    - Subjects are listed in alphabetical order, comma-separated.
-    - If a student has no grades, show "none" for subjects.
-    - Use summarize_class() to get total_students and class_average.
+    - Student names are left-aligned in a field of 16 characters. OK
+    - Averages are right-aligned with 2 decimal places. OK
+    - Subjects are listed in alphabetical order, comma-separated. OK
+    - If a student has no grades, show "none" for subjects. OK
+    - Use summarize_class() to get total_students and class_average. OK
     - Students are listed in alphabetical order by name.
 
     Args:
@@ -122,15 +122,46 @@ def export_report(students: dict, grades: dict) -> str:
     report = ""
 
     # Header
+
     header = "─────────────────────────────────\n"
     header += "GRADEBOOK REPORT\n"
-    header += f"Total students: {len(students)}\n"
-    header += f"Class average:  {summarize_class(students, grades)[1]}\n"
+    header += f"Total students: {summarize_class(students, grades)[0]}\n"
+    header += f"Class average:  {summarize_class(students, grades)[1]}\n\n"
 
     # Students details
-    for matricule in students.keys():
-        student_line
+
+    details = "STUDENT DETAILS\n"
+
+    unsorted_students_list = []
+    sorted_students_list = sorted(unsorted_students_list)
+
+    sorted_students = sorted(students.get("name"))
+
+    for k, v in students.items():
+        student_unsorted_list = []
+        matricule = k
+        student_name = format(v.get("name"), "<16")
+        average = format(get_average(grades, matricule), ">6")
+        subjects_list = sorted(list(get_subjects(grades.fromkeys(matricule))))
+        subjects = ""
+        if len(subjects_list) == 0:
+            subjects = "none"
+        else:
+            for subject in subjects_list:
+                subjects += f"{subject}, "
+            subjects += chr(8)*2
+
+        student_line = f"{matricule} | {student_name}| Avg: {average} | Subjects: {subjects}\n"
+        details += student_line
+
+
+
+    # Footer
+
+    footer = "─────────────────────────────────\n"
+
+    # Assembling report
+
+    report = header + details + footer
 
     return report
-
-    raise NotImplementedError("export_report is not implemented yet.")
