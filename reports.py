@@ -80,12 +80,19 @@ def summarize_class(students: dict, grades: dict) -> tuple:
     class_average = 0.0
     highest_average = 0.0
     lowest_average = 0.0
-    for student in students:
-        average = get_average(grades, student)
-
-
+    # Managing case "len(students) = 0 to avoid a DivisionByZero error.
+    if len(students) == 0:
+        return total_students, class_average, highest_average, lowest_average
+    # Calculating students averages
+    else:
+        for student in students.keys():
+            average = get_average(grades, student)
+            averages.append(average)
+    # Formating before return
+    class_average = float( format(sum(averages)/len(averages), ".2f") )
+    highest_average = max(averages)
+    lowest_average = min(averages)
     return total_students, class_average, highest_average, lowest_average
-
 
 
 def export_report(students: dict, grades: dict) -> str:
