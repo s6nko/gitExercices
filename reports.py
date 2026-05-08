@@ -62,17 +62,7 @@ def summarize_class(students: dict, grades: dict) -> tuple:
 
     Returns:
         tuple: (total_students, class_average, highest_average, lowest_average)
-
-    Example:
-        >>> students = {
-        ...   "S001": {"name": "Alice", "id": "S001"},
-        ...   "S002": {"name": "Bob",   "id": "S002"},
-        ... }
-        >>> grades = {"S001": {"Math": 80}, "S002": {"Math": 60}}
-        >>> summarize_class(students, grades)
-        (2, 70.0, 80.0, 60.0)
-    """
-    # TODO: implement this function
+"""
 
     # Initialisation
     total_students = len(students)
