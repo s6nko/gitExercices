@@ -5,6 +5,7 @@
 from grades import get_average, get_subjects
 
 
+
 def get_top_students(students: dict, grades: dict, n: int = 3) -> list:
     """
     Return the top n students with the highest average scores.
@@ -122,23 +123,17 @@ def export_report(students: dict, grades: dict) -> str:
     report = ""
 
     # Header
-
     header = "─────────────────────────────────\n"
     header += "GRADEBOOK REPORT\n"
     header += f"Total students: {summarize_class(students, grades)[0]}\n"
     header += f"Class average:  {summarize_class(students, grades)[1]}\n\n"
 
     # Students details
-
     details = "STUDENT DETAILS\n"
-
-    unsorted_students_list = []
-    sorted_students_list = sorted(unsorted_students_list)
-
-    sorted_students = sorted(students.get("name"))
-
-    for k, v in students.items():
-        student_unsorted_list = []
+    # Alphabetically sorted students
+    sorted_students = dict(sorted(students.items(), key = lambda student: student[1].get("name")))
+    # Creation of a line for each student
+    for k, v in sorted_students.items():
         matricule = k
         student_name = format(v.get("name"), "<16")
         average = format(get_average(grades, matricule), ">6")
@@ -154,14 +149,9 @@ def export_report(students: dict, grades: dict) -> str:
         student_line = f"{matricule} | {student_name}| Avg: {average} | Subjects: {subjects}\n"
         details += student_line
 
-
-
     # Footer
-
     footer = "─────────────────────────────────\n"
 
     # Assembling report
-
     report = header + details + footer
-
     return report
