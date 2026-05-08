@@ -44,7 +44,6 @@ def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict:
     else :
         student_grades = grades.get(student_id)
         student_grades[subject] = score
-        print(grades)
         return grades
 
 def get_average(grades: dict, student_id: str) -> float:
@@ -134,7 +133,8 @@ def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> l
         [("S001", "Alice", 40.0)]
     """
     unsorted_failing_students = []
-    for student_id, student_grades in grades.items():
+    for student_id in students.keys() :
+        student_grades = grades.get(student_id)
         if student_grades == {}:
             unsorted_failing_students.append((student_id, students.get(student_id).get("name"), 0.0))
         else:
@@ -142,5 +142,4 @@ def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> l
             if student_average_grade >= threshold:
                 continue
             unsorted_failing_students.append((student_id, students.get(student_id).get("name"), student_average_grade))
-
     return sorted(unsorted_failing_students, key=lambda x: x[2])
