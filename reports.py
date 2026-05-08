@@ -85,6 +85,7 @@ def summarize_class(students: dict, grades: dict) -> tuple:
     return total_students, class_average, highest_average, lowest_average
 
 
+
 def export_report(students: dict, grades: dict) -> str:
     """
     Generate and return a formatted text report as a single string.
@@ -116,5 +117,20 @@ def export_report(students: dict, grades: dict) -> str:
     Returns:
         str: the complete formatted report
     """
-    # TODO: implement this function
+
+    # Initialisation
+    report = ""
+
+    # Header
+    header = "─────────────────────────────────\n"
+    header += "GRADEBOOK REPORT\n"
+    header += f"Total students: {len(students)}\n"
+    header += f"Class average:  {summarize_class(students, grades)[1]}\n"
+
+    # Students details
+    for matricule in students.keys():
+        student_line
+
+    return report
+
     raise NotImplementedError("export_report is not implemented yet.")
