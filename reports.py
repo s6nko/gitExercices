@@ -104,11 +104,11 @@ def export_report(students: dict, grades: dict) -> str:
     ─────────────────────────────────
 
     Rules:
-    - Student names are left-aligned in a field of 16 characters. OK
-    - Averages are right-aligned with 2 decimal places. OK
-    - Subjects are listed in alphabetical order, comma-separated. OK
-    - If a student has no grades, show "none" for subjects. OK
-    - Use summarize_class() to get total_students and class_average. OK
+    - Student names are left-aligned in a field of 16 characters.
+    - Averages are right-aligned with 2 decimal places.
+    - Subjects are listed in alphabetical order, comma-separated.
+    - If a student has no grades, show "none" for subjects.
+    - Use summarize_class() to get total_students and class_average.
     - Students are listed in alphabetical order by name.
 
     Args:
