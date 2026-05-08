@@ -137,7 +137,6 @@ def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> l
         student_grades = grades.get(student_id)
         if student_grades == {}:
             unsorted_failing_students.append((student_id, students.get(student_id).get("name"), 0.0))
-            print(student_id)
         else:
             student_average_grade = get_average(grades, student_id)
             if student_average_grade >= threshold:
