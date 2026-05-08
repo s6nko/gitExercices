@@ -2,7 +2,8 @@
 # Developer C — Reporting & summaries
 # Branch: feature/reports
 
-from grades import get_average
+from grades import get_average, get_subjects
+
 
 
 def get_top_students(students: dict, grades: dict, n: int = 3) -> list:
@@ -21,18 +22,25 @@ def get_top_students(students: dict, grades: dict, n: int = 3) -> list:
 
     Returns:
         list[tuple]: list of (student_id, name, average) sorted descending
-
-    Example:
-        >>> students = {
-        ...   "S001": {"name": "Alice", "id": "S001"},
-        ...   "S002": {"name": "Bob",   "id": "S002"},
-        ... }
-        >>> grades = {"S001": {"Math": 90}, "S002": {"Math": 70}}
-        >>> get_top_students(students, grades, n=1)
-        [("S001", "Alice", 90.0)]
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_top_students is not implemented yet.")
+
+    # Creation of tuples (unsorted)
+    unsorted_list = []
+    for k, v in students.items():
+        student_id = k
+        name = v.get("name")
+        average = get_average(grades, student_id)
+        unsorted_list.append((student_id, name, average))
+
+    # Sort the unsorted list via "average" (3rd element of the tuple)
+    sorted_list = sorted(unsorted_list, key = lambda student: student[2], reverse=True)
+
+    # Return the "n" best students of the class
+    if n >= (len(students)):
+        return sorted_list
+    else:
+        return sorted_list[0:n]
+
 
 
 def summarize_class(students: dict, grades: dict) -> tuple:
@@ -55,18 +63,28 @@ def summarize_class(students: dict, grades: dict) -> tuple:
 
     Returns:
         tuple: (total_students, class_average, highest_average, lowest_average)
+"""
 
-    Example:
-        >>> students = {
-        ...   "S001": {"name": "Alice", "id": "S001"},
-        ...   "S002": {"name": "Bob",   "id": "S002"},
-        ... }
-        >>> grades = {"S001": {"Math": 80}, "S002": {"Math": 60}}
-        >>> summarize_class(students, grades)
-        (2, 70.0, 80.0, 60.0)
-    """
-    # TODO: implement this function
-    raise NotImplementedError("summarize_class is not implemented yet.")
+    # Initialisation
+    total_students = len(students)
+    averages = []
+    class_average = 0.0
+    highest_average = 0.0
+    lowest_average = 0.0
+    # Managing case "len(students) = 0 to avoid a DivisionByZero error.
+    if len(students) == 0:
+        return total_students, class_average, highest_average, lowest_average
+    # Calculating students averages
+    else:
+        for student in students.keys():
+            average = get_average(grades, student)
+            averages.append(average)
+    # Formating before return
+    class_average = float( format(sum(averages)/len(averages), ".2f") )
+    highest_average = max(averages)
+    lowest_average = min(averages)
+    return total_students, class_average, highest_average, lowest_average
+
 
 
 def export_report(students: dict, grades: dict) -> str:
@@ -100,5 +118,40 @@ def export_report(students: dict, grades: dict) -> str:
     Returns:
         str: the complete formatted report
     """
-    # TODO: implement this function
-    raise NotImplementedError("export_report is not implemented yet.")
+
+    # Initialisation
+    report = ""
+
+    # Header
+    header = "─────────────────────────────────\n"
+    header += "GRADEBOOK REPORT\n"
+    header += f"Total students: {summarize_class(students, grades)[0]}\n"
+    header += f"Class average:  {summarize_class(students, grades)[1]}\n\n"
+
+    # Students details
+    details = "STUDENT DETAILS\n"
+    # Alphabetically sorted students
+    sorted_students = dict(sorted(students.items(), key = lambda student: student[1].get("name")))
+    # Creation of a line for each student
+    for k, v in sorted_students.items():
+        matricule = k
+        student_name = format(v.get("name"), "<16")
+        average = format(get_average(grades, matricule), ">6")
+        subjects_list = sorted(list(get_subjects(grades.fromkeys(matricule))))
+        subjects = ""
+        if len(subjects_list) == 0:
+            subjects = "none"
+        else:
+            for subject in subjects_list:
+                subjects += f"{subject}, "
+            subjects += chr(8)*2
+
+        student_line = f"{matricule} | {student_name}| Avg: {average} | Subjects: {subjects}\n"
+        details += student_line
+
+    # Footer
+    footer = "─────────────────────────────────\n"
+
+    # Assembling report
+    report = header + details + footer
+    return report
