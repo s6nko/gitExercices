@@ -32,11 +32,19 @@ def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict:
         >>> db = {}
         >>> add_grade(db, "S001", "Math", 85)
         >>> db
-        {"S001": {"Math": 85}}
+        {"S001": {"Math": 85, "English": 90}}
     """
-    # TODO: implement this function
-    raise NotImplementedError("add_grade is not implemented yet.")
+    if score < 0 or score > 100:
+        print(f"Invalid score: {score}. Score must be between 0 and 100.")
+        return grades
 
+    if student_id not in grades:
+        grades.setdefault(student_id, {subject: score})
+        return grades
+    else :
+        student_grades = grades.get(student_id)
+        student_grades[subject] = score
+        return grades
 
 def get_average(grades: dict, student_id: str) -> float:
     """
@@ -59,8 +67,15 @@ def get_average(grades: dict, student_id: str) -> float:
         >>> get_average(db, "S999")
         0.0
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_average is not implemented yet.")
+    if student_id not in grades:
+        return float(0.0)
+
+    student_grades = grades.get(student_id)
+    sum_grade = 0.0
+    for grade in student_grades.values():
+        sum_grade += grade
+
+    return float(format(sum_grade / len(student_grades), '.2f'))
 
 
 def get_subjects(grades: dict) -> set:
@@ -84,9 +99,14 @@ def get_subjects(grades: dict) -> set:
         >>> get_subjects(db)
         {"Math", "English", "Science"}
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_subjects is not implemented yet.")
+    if grades == {}:
+        return set()
 
+    subjects = set()
+    for grades in grades.values():
+        for subject in grades.keys():
+            subjects.add(subject)
+    return subjects
 
 def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> list:
     """
@@ -112,5 +132,14 @@ def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> l
         >>> get_failing_students(students, grades)
         [("S001", "Alice", 40.0)]
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_failing_students is not implemented yet.")
+    unsorted_failing_students = []
+    for student_id in students.keys() :
+        student_grades = grades.get(student_id)
+        if student_grades == {}:
+            unsorted_failing_students.append((student_id, students.get(student_id).get("name"), 0.0))
+        else:
+            student_average_grade = get_average(grades, student_id)
+            if student_average_grade >= threshold:
+                continue
+            unsorted_failing_students.append((student_id, students.get(student_id).get("name"), student_average_grade))
+    return sorted(unsorted_failing_students, key=lambda x: x[2])
