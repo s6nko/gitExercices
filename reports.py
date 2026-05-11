@@ -137,14 +137,11 @@ def export_report(students: dict, grades: dict) -> str:
         matricule = k
         student_name = format(v.get("name"), "<16")
         average = format(get_average(grades, matricule), ">6")
-        subjects_list = sorted(list(get_subjects(grades.fromkeys(matricule))))
-        subjects = ""
+        subjects_list = sorted(list(get_subjects( {matricule : grades.get(matricule)} )))
         if len(subjects_list) == 0:
             subjects = "none"
         else:
-            for subject in subjects_list:
-                subjects += f"{subject}, "
-            subjects += chr(8)*2
+            subjects = ", ".join(subjects_list)
 
         student_line = f"{matricule} | {student_name}| Avg: {average} | Subjects: {subjects}\n"
         details += student_line
