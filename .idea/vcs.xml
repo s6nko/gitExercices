@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Odoo/Preformation" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Odoo/Preformation/01 - Python (8 days)/05 - Git &amp; Github" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Odoo/ToolBox" vcs="Git" />
   </component>
 </project>
